@@ -4,7 +4,7 @@ import traceback
 import unittest
 
 from robot.utils.asserts import assert_equal, assert_raises, assert_true
-from robot.utils.error import ErrorDetails, get_error_details, get_error_message
+from robot.utils import ErrorDetails, get_error_details, get_error_message, PYPY
 
 
 def format_traceback(no_tb=False):
@@ -12,7 +12,7 @@ def format_traceback(no_tb=False):
     # This is needed when testing chaining and cause without traceback.
     # We set `err.__traceback__ = None` in tests and apparently that makes
     # `tb` here `None´ with Python 3.11 but not with others.
-    if sys.version_info < (3, 11) and no_tb:
+    if no_tb and (sys.version_info < (3, 11) or PYPY):
         tb = None
     return "".join(traceback.format_exception(e, v, tb)).rstrip()
 
