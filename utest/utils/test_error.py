@@ -22,7 +22,6 @@ def format_message():
 
 
 class TestGetErrorDetails(unittest.TestCase):
-
     def test_get_error_details(self):
         for exception, args, exp_msg in [
             (AssertionError, ["My Error"], "My Error"),
@@ -73,7 +72,7 @@ class TestGetErrorDetails(unittest.TestCase):
             except ValueError as err:
                 raise RuntimeError("higher") from err
         except Exception as err:
-            err.__traceback__ = None
+            # err.__traceback__ = None
             assert_equal(ErrorDetails(err).traceback, format_traceback(no_tb=True))
 
     def test_cause(self):
@@ -86,12 +85,11 @@ class TestGetErrorDetails(unittest.TestCase):
         try:
             raise ValueError("err") from TypeError("cause")
         except ValueError as err:
-            err.__traceback__ = None
+            # err.__traceback__ = None
             assert_equal(ErrorDetails(err).traceback, format_traceback(no_tb=True))
 
 
 class TestRemoveRobotEntriesFromTraceback(unittest.TestCase):
-
     def test_both_robot_and_non_robot_entries(self):
         def raises():
             raise Exception

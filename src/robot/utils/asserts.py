@@ -176,13 +176,13 @@ def assert_raises_with_msg(exc_class, expected_msg, callable_obj, *args, **kwarg
 
 def assert_equal(first, second, msg=None, values=True, formatter=safe_str):
     """Fail if given objects are unequal as determined by the '==' operator."""
-    if not first == second:  # noqa: SIM201
+    if first != second:  # noqa: SIM201
         _report_inequality(first, second, "!=", msg, values, formatter)
 
 
 def assert_not_equal(first, second, msg=None, values=True, formatter=safe_str):
     """Fail if given objects are equal as determined by the '==' operator."""
-    if first == second:
+    if first == second:  # noqa: SIM201
         _report_inequality(first, second, "==", msg, values, formatter)
 
 
